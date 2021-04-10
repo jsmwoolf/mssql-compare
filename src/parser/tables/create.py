@@ -15,13 +15,14 @@ class SQLCreateTable():
         # Set up logger
         self.logger = logging.getLogger()
         self.logger.setLevel(level=logging.DEBUG)
-        fh = logging.FileHandler(f'create-table-{datetime.datetime.now()}.log')
+        fh = logging.FileHandler(f'logs/create-table-{datetime.datetime.now()}.log')
         fh.setLevel(level=logging.DEBUG)
         fh.setFormatter(formatter)
         self.logger.addHandler(fh)
         self.logger.info(' '.join([token.value for token in self.tokens]))
         # Generate the metadata
         self._getMetaData()
+        fh.close()
         self.logger.removeHandler(fh)
 
     def __repr__(self):
