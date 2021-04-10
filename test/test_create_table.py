@@ -25,6 +25,11 @@ class TestCreateTable(unittest.TestCase):
         meta = convertToMetaData(query)
         print(meta)
 
+    def test_identity_incomplete(self):
+        query = "CREATE TABLE test1 (test1a BIGINT IDENTITY(1));"
+        meta = convertToMetaData(query)
+        print(meta)
+
     def test_identity_minimum_comma(self):
         query = "CREATE TABLE test1 (test1a BIGINT IDENTITY, testid INT);"
         meta = convertToMetaData(query)
