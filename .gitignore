@@ -135,4 +135,3 @@ dmypy.json
 .idea/misc.xml
 .idea/workspace.xml
 atante/config/config.py
-*.sql
