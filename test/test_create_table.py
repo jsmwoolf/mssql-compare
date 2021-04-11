@@ -1,7 +1,11 @@
 import unittest
 from src.parser.parser import convertToMetaData
 
-class TestCreateTable(unittest.TestCase):
+class TestCreateTableBasic(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print(f"Starting up {cls.__name__}")
+    
     def setUp(self):
         print(f"Running test: {self._testMethodName}")
     
@@ -15,6 +19,53 @@ class TestCreateTable(unittest.TestCase):
         meta = convertToMetaData(query)
         print(meta)
 
+class TestCreateTableDataType(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print(f"Starting up {cls.__name__}")
+
+    def setUp(self):
+        print(f"Running test: {self._testMethodName}")
+    
+    def test_numeric(self):
+        query = "CREATE TABLE test1 (testid NUMERIC);"
+        meta = convertToMetaData(query)
+        print(meta)
+
+    def test_numeric_precision(self):
+        query = "CREATE TABLE test1 (testid NUMERIC(3));"
+        meta = convertToMetaData(query)
+        print(meta)
+
+    def test_numeric_full(self):
+        query = "CREATE TABLE test1 (testid NUMERIC(3, 4));"
+        meta = convertToMetaData(query)
+        print(meta)
+
+    def test_decimal(self):
+        query = "CREATE TABLE test1 (testid DECIMAL);"
+        meta = convertToMetaData(query)
+        print(meta)
+
+    def test_decimal_precision(self):
+        query = "CREATE TABLE test1 (testid DECIMAL(3));"
+        meta = convertToMetaData(query)
+        print(meta)
+
+    def test_decimal_full(self):
+        query = "CREATE TABLE test1 (testid DECIMAL(3, 4));"
+        meta = convertToMetaData(query)
+        print(meta)
+
+
+class TestCreateTableIdentity(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        print(f"Starting up {cls.__name__}")
+    
+    def setUp(self):
+        print(f"Running test: {self._testMethodName}")
+
     def test_identity_minimum(self):
         query = "CREATE TABLE test1 (test1a BIGINT IDENTITY);"
         meta = convertToMetaData(query)
@@ -26,9 +77,10 @@ class TestCreateTable(unittest.TestCase):
         print(meta)
 
     def test_identity_incomplete(self):
-        query = "CREATE TABLE test1 (test1a BIGINT IDENTITY(1));"
-        meta = convertToMetaData(query)
-        print(meta)
+        with self.assertRaises(Exception) as context:   
+            query = "CREATE TABLE test1 (test1a BIGINT IDENTITY(1));"
+            convertToMetaData(query)
+            self.assertTrue('Expected ,' in context.exception)
 
     def test_identity_minimum_comma(self):
         query = "CREATE TABLE test1 (test1a BIGINT IDENTITY, testid INT);"

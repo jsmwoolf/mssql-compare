@@ -10,7 +10,8 @@ def main():
     args = parser.parse_args()
     print(args.source)
     if os.path.isfile(args.source):
-        print(convertFileToMetaData(args.source))
+        for meta in convertFileToMetaData(args.source):
+            print(meta)
 
 
 if __name__ == '__main__':
